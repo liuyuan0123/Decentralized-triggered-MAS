@@ -1,0 +1,33 @@
+function dx = mas_neighbor(t, x)
+global A; global B1; global B2; global B3; global B4; global B5;
+global D1; global D2; global D3; global D4; global D5; global K1;
+global K2; global K3; global K4; global K5; global L;% global u;
+
+dx = zeros(10,1);
+% u = [];
+delta = 0.01;
+
+u1 = K1*((x(1:2) - x(3:4)) + (x(1:2) - x(7:8)));
+u2 = K2*((x(3:4) - x(5:6)) + (x(3:4) - x(9:10)));
+u3 = K3*((x(5:6) - x(3:4)) + (x(5:6) - x(6:7)) + (x(5:6) - x(9:10)));
+u4 = K4*((x(7:8) - x(3:4)) + (x(7:8) - x(9:10)));
+u5 = K5*((x(9:10) - x(1:2)) + (x(9:10) - x(7:8)));
+
+% for i = 1:5
+%    % l_i = kron(L(i,:), eye(2))
+%    eval(['l' num2str(i) '= kron( L(' num2str(i) ',:), eye(2));'])
+%    % X_i = l_i*x(2i-1:2i)
+%    eval(['X' num2str(i) '= l' num2str(i) ' *x(2* ' num2str(i) ' -1: 2* ' num2str(i) ');' ])
+% end
+% if X1 
+
+omega = 0.1*randn(5,1);
+% omega = zeros(5,1);
+
+dx(1:2) = A*x(1:2) - B1*u1 + D1*omega(1);
+dx(3:4) = A*x(3:4) - B2*u2 + D2*omega(2);
+dx(5:6) = A*x(5:6) - B3*u3 + D3*omega(3);
+dx(7:8) = A*x(7:8) - B4*u4 + D4*omega(4);
+dx(9:10) = A*x(9:10) - B5*u5 + D5*omega(5);
+% u = [u;t, u1, u2, u3, u4, u5];
+end
